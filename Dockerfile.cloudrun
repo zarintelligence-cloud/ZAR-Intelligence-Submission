@@ -1,0 +1,15 @@
+# One image, two services. ZAR_SERVICE selects polaris (public) or workshop (private).
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 ZAR_SERVICE=polaris
+RUN apt-get update && apt-get install -y --no-install-recommends fonts-dejavu-core \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements-lock.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+COPY zar_core ./zar_core
+COPY domains ./domains
+COPY services ./services
+COPY app.py ./app.py
+COPY tenants ./tenants
+COPY fixtures ./fixtures
+CMD ["sh", "-c", "exec uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}"]

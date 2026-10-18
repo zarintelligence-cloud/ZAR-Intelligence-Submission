@@ -1,0 +1,14 @@
+domain:
+  id: saas.operations
+  name: ZAR SaaS Operations Pack
+  version: 1.0.0
+  schema_version: 1.0.0
+  policy_version: 1.0.0
+  module: domains.saas
+  lifecycle: experimental
+  requires: {zar-core: "3", contract-schema: "3"}
+  capabilities:
+    incident_triage: triage-rules
+    plan_recommendation: plan-rules
+  release_notes:
+    - Initial incident triage and plan recommendation capabilities.

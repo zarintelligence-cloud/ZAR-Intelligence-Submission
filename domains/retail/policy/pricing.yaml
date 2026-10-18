@@ -1,0 +1,12 @@
+currency: INR
+tax_rate: 0.0        # Phase 1 quotes are shown exclusive of tax; configure per tenant.
+print_methods:
+  sublimation: {per_piece: 120, setup: 0}
+  screen: {per_piece: 70, setup: 1500}
+  dtf: {per_piece: 95, setup: 0}
+name_number_charge: 45
+quantity_tiers:
+  - {minimum: 0, multiplier: 1.15}
+  - {minimum: 25, multiplier: 1.0}
+  - {minimum: 50, multiplier: 0.94}
+  - {minimum: 100, multiplier: 0.88}

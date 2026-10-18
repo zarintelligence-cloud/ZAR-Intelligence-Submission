@@ -1,0 +1,24 @@
+# Store 6 demo catalogue. Prices are ILLUSTRATIVE - replace with the Store 6 price list before go-live.
+garments:
+  cricket jersey: {fabric: polyester, base_price: 380, aliases: [cricket jersey, cricket jerseys, cricket t-shirt, cricket kit, jersey, jerseys]}
+  polo: {fabric: cotton, base_price: 420, aliases: [polo, polo t-shirt, polo tee, collar t-shirt]}
+  round neck tee: {fabric: cotton, base_price: 260, aliases: [round neck, round-neck, tee, tees, t-shirt, t-shirts, tshirt, tshirts]}
+  sports shorts: {fabric: polyester, base_price: 290, aliases: [shorts, sports shorts, team shorts]}
+  jersey + shorts combo: {fabric: polyester, base_price: 620, aliases: [combo, kit combo, jersey and shorts, jersey + shorts, jersey with shorts, full kit]}
+sizes: [XS, S, M, L, XL, XXL, 3XL]
+colours:
+  navy: [21, 35, 62]
+  gold: [212, 175, 55]
+  black: [32, 32, 32]
+  white: [245, 245, 245]
+  red: [200, 30, 45]
+  maroon: [110, 20, 35]
+  royal blue: [35, 75, 190]
+  sky blue: [110, 180, 230]
+  green: [20, 120, 60]
+  yellow: [245, 205, 30]
+  orange: [240, 120, 20]
+  grey: [128, 128, 128]
+  purple: [100, 40, 140]
+default_colourways: [navy, black, white]
+personalisation_limits: {max_name_chars: 12, number_min: 0, number_max: 99}

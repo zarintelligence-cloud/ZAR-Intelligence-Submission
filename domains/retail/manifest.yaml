@@ -1,0 +1,42 @@
+domain:
+  id: retail.custom_apparel
+  name: ZAR Retail Pack - Custom Apparel
+  version: 3.2.0
+  schema_version: 2.2.0
+  policy_version: 2.2.0
+  workflow_version: 1.1.0
+  module: domains.retail
+  lifecycle: preview
+  requires:
+    zar-core: "3"
+    contract-schema: "3"
+    workflow-runtime: "1"
+    policy-runtime: "1"
+    decision-runtime: "1"
+  capabilities:
+    requirements_analysis: Rosetta
+    artwork_analysis: Spectra
+    proof_generation: Hubble
+    roster_management: Pleiades
+    pricing: Kepler
+    fulfillment_confidence: Horizon
+    compose_reply: Polaris-voice
+    order_handoff: Store6-connector
+  objectives:
+    - minimize_customer_effort
+    - preserve_artwork_fidelity
+    - produce_auditable_quote
+    - meet_customer_deadline
+  constraints:
+    - budget
+    - deadline
+    - production_method
+    - roster_completeness
+  release_notes:
+    - 3.2.0 Durable local storage, serialized events, failed-step recovery, persistent handoff retries, validated uploads and roster browser fixes.
+    - 3.1.0 Store 6 connector (order_handoff), roster corrections by name, shorts and combo garments,
+      explicit 'no personalisation', debug traces on every capability.
+    - Rebased on ZAR Core 3 Context contracts (breaking; hence MAJOR 3.0.0).
+    - Workflow moved out of Polaris into declarative workflow.yaml.
+    - Print method now chosen by deterministic policy table; Gemini supplies visual evidence only.
+    - Added Horizon fulfillment_confidence (Monte Carlo) and budget-aware alternatives in Kepler.

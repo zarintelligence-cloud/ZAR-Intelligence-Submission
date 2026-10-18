@@ -1,0 +1,154 @@
+[
+ {
+  "id": "basic",
+  "name": "Basic",
+  "order": 0,
+  "priceMonthly": {
+   "INR": 3999,
+   "USD": 49,
+   "EUR": 45
+  },
+  "overage": {
+   "INR": 35,
+   "USD": 0.45,
+   "EUR": 0.42
+  },
+  "quota": 100,
+  "blurb": "One storefront starting with custom orders.",
+  "highlights": [
+   "100 quoted orders a month",
+   "Web chat and email front desk",
+   "Order search",
+   "30 days of history",
+   "2 seats"
+  ],
+  "recommended": false,
+  "features": [
+   "overview",
+   "orders",
+   "webchat",
+   "email",
+   "proofs"
+  ],
+  "annualMonthsFree": 2
+ },
+ {
+  "id": "plus",
+  "name": "Plus",
+  "order": 1,
+  "priceMonthly": {
+   "INR": 11999,
+   "USD": 149,
+   "EUR": 139
+  },
+  "overage": {
+   "INR": 29,
+   "USD": 0.35,
+   "EUR": 0.32
+  },
+  "quota": 500,
+  "blurb": "Growing merchants on more than one channel.",
+  "highlights": [
+   "500 quoted orders a month",
+   "Web chat, email, WhatsApp and Instagram",
+   "Agent traces",
+   "90 days of history",
+   "5 seats"
+  ],
+  "recommended": true,
+  "features": [
+   "overview",
+   "orders",
+   "traces",
+   "brain",
+   "webchat",
+   "email",
+   "whatsapp",
+   "instagram",
+   "proofs",
+   "roster",
+   "zuzu"
+  ],
+  "annualMonthsFree": 2
+ },
+ {
+  "id": "pro",
+  "name": "Pro",
+  "order": 2,
+  "priceMonthly": {
+   "INR": 29999,
+   "USD": 399,
+   "EUR": 369
+  },
+  "overage": {
+   "INR": 19,
+   "USD": 0.25,
+   "EUR": 0.23
+  },
+  "quota": 2000,
+  "blurb": "Teams that need audit and insight.",
+  "highlights": [
+   "2,000 quoted orders a month",
+   "Decision audit with record hashes",
+   "Insights for analysts",
+   "1 year of history",
+   "15 seats and custom roles"
+  ],
+  "recommended": false,
+  "features": [
+   "overview",
+   "orders",
+   "traces",
+   "audit",
+   "insights",
+   "brain",
+   "webchat",
+   "email",
+   "whatsapp",
+   "instagram",
+   "proofs",
+   "roster",
+   "multistore",
+   "zuzu",
+   "export"
+  ],
+  "annualMonthsFree": 2
+ },
+ {
+  "id": "enterprise",
+  "name": "Enterprise",
+  "order": 3,
+  "priceMonthly": null,
+  "overage": null,
+  "quota": null,
+  "blurb": "Multiple brands, regions or domain packs.",
+  "highlights": [
+   "Unlimited storefronts",
+   "Single sign-on and SCIM",
+   "Dedicated region and data residency",
+   "7-year audit retention",
+   "99.9% uptime commitment"
+  ],
+  "recommended": false,
+  "features": [
+   "overview",
+   "orders",
+   "traces",
+   "audit",
+   "insights",
+   "brain",
+   "webchat",
+   "email",
+   "whatsapp",
+   "instagram",
+   "proofs",
+   "roster",
+   "multistore",
+   "zuzu",
+   "export",
+   "sso",
+   "residency"
+  ],
+  "annualMonthsFree": 2
+ }
+]

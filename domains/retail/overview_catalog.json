@@ -1,0 +1,322 @@
+{
+  "version": 6,
+  "departments": [
+    {
+      "id": "customer",
+      "name": "Customer",
+      "icon": "◌",
+      "color": "#E58693",
+      "subtitle": "front desk · briefs",
+      "planned": false,
+      "agents": [
+        [
+          "polaris",
+          "Front desk"
+        ],
+        [
+          "rosetta",
+          "Brief"
+        ]
+      ]
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "icon": "◇",
+      "color": "#7CC5B2",
+      "subtitle": "artwork · proofs",
+      "planned": false,
+      "agents": [
+        [
+          "spectra",
+          "Artwork"
+        ],
+        [
+          "hubble",
+          "Proof"
+        ]
+      ]
+    },
+    {
+      "id": "teamops",
+      "name": "Team ops",
+      "icon": "◎",
+      "color": "#E4BA62",
+      "subtitle": "rosters · web reminders",
+      "planned": false,
+      "agents": [
+        [
+          "pleiades",
+          "Team roster"
+        ]
+      ]
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing",
+      "icon": "₹",
+      "color": "#D5B36D",
+      "subtitle": "quotes · budgets",
+      "planned": false,
+      "agents": [
+        [
+          "kepler",
+          "Quote"
+        ]
+      ]
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance",
+      "icon": "△",
+      "color": "#A99BE0",
+      "subtitle": "safety · claims",
+      "planned": true,
+      "agents": [
+        [
+          "horizon",
+          "Risk checks before production"
+        ]
+      ]
+    },
+    {
+      "id": "supply",
+      "name": "Supply",
+      "icon": "▣",
+      "color": "#7FA8E0",
+      "subtitle": "makers · capacity",
+      "planned": true,
+      "agents": [
+        [
+          "nebula",
+          "Maker hand-off and capacity"
+        ]
+      ]
+    },
+    {
+      "id": "intel",
+      "name": "Intelligence",
+      "icon": "◈",
+      "color": "#9AD07F",
+      "subtitle": "patterns · advice",
+      "planned": true,
+      "agents": [
+        [
+          "voyager",
+          "Advice from order history"
+        ]
+      ]
+    }
+  ],
+  "jobs": [
+    {
+      "id": "polaris.receive",
+      "agent_id": "polaris",
+      "label": "Receive the message",
+      "seq": 1
+    },
+    {
+      "id": "polaris.route",
+      "agent_id": "polaris",
+      "label": "Route to specialists",
+      "seq": 2
+    },
+    {
+      "id": "polaris.states",
+      "agent_id": "polaris",
+      "label": "Run the order states",
+      "seq": 3
+    },
+    {
+      "id": "polaris.reply",
+      "agent_id": "polaris",
+      "label": "Reply in brand voice",
+      "seq": 4
+    },
+    {
+      "id": "polaris.handoff",
+      "agent_id": "polaris",
+      "label": "Hand to a person",
+      "seq": 5
+    },
+    {
+      "id": "rosetta.read",
+      "agent_id": "rosetta",
+      "label": "Read the brief",
+      "seq": 1
+    },
+    {
+      "id": "rosetta.lang",
+      "agent_id": "rosetta",
+      "label": "Detect the language mix",
+      "seq": 2
+    },
+    {
+      "id": "rosetta.missing",
+      "agent_id": "rosetta",
+      "label": "Find what's missing",
+      "seq": 3
+    },
+    {
+      "id": "rosetta.ask",
+      "agent_id": "rosetta",
+      "label": "Ask questions",
+      "seq": 4
+    },
+    {
+      "id": "rosetta.guard",
+      "agent_id": "rosetta",
+      "label": "Flag instructions in text",
+      "seq": 5
+    },
+    {
+      "id": "spectra.measure",
+      "agent_id": "spectra",
+      "label": "Measure the logo",
+      "seq": 1
+    },
+    {
+      "id": "spectra.method",
+      "agent_id": "spectra",
+      "label": "Choose the print method",
+      "seq": 2
+    },
+    {
+      "id": "spectra.file",
+      "agent_id": "spectra",
+      "label": "Flag file problems",
+      "seq": 3
+    },
+    {
+      "id": "hubble.composite",
+      "agent_id": "hubble",
+      "label": "Composite proofs",
+      "seq": 1
+    },
+    {
+      "id": "hubble.fidelity",
+      "agent_id": "hubble",
+      "label": "Check fidelity",
+      "seq": 2
+    },
+    {
+      "id": "hubble.rebuild",
+      "agent_id": "hubble",
+      "label": "Rebuild rejected proofs",
+      "seq": 3
+    },
+    {
+      "id": "pleiades.link",
+      "agent_id": "pleiades",
+      "label": "Create the roster link",
+      "seq": 1
+    },
+    {
+      "id": "pleiades.collect",
+      "agent_id": "pleiades",
+      "label": "Collect entries",
+      "seq": 2
+    },
+    {
+      "id": "pleiades.dupes",
+      "agent_id": "pleiades",
+      "label": "Flag duplicate numbers",
+      "seq": 3
+    },
+    {
+      "id": "pleiades.remind",
+      "agent_id": "pleiades",
+      "label": "Post web-chat reminders",
+      "seq": 4
+    },
+    {
+      "id": "kepler.price",
+      "agent_id": "kepler",
+      "label": "Price from the table",
+      "seq": 1
+    },
+    {
+      "id": "kepler.tier",
+      "agent_id": "kepler",
+      "label": "Apply the quantity tier",
+      "seq": 2
+    },
+    {
+      "id": "kepler.budget",
+      "agent_id": "kepler",
+      "label": "Flag budget gaps",
+      "seq": 3
+    },
+    {
+      "id": "kepler.summary",
+      "agent_id": "kepler",
+      "label": "Write the quote summary",
+      "seq": 4
+    },
+    {
+      "id": "horizon.kids",
+      "agent_id": "horizon",
+      "label": "Children's-wear checks",
+      "seq": 1
+    },
+    {
+      "id": "horizon.claims",
+      "agent_id": "horizon",
+      "label": "Check product claims",
+      "seq": 2
+    },
+    {
+      "id": "horizon.labels",
+      "agent_id": "horizon",
+      "label": "Label requirements",
+      "seq": 3
+    },
+    {
+      "id": "nebula.spec",
+      "agent_id": "nebula",
+      "label": "Send the production spec",
+      "seq": 1
+    },
+    {
+      "id": "nebula.capacity",
+      "agent_id": "nebula",
+      "label": "Check maker capacity",
+      "seq": 2
+    },
+    {
+      "id": "nebula.dispatch",
+      "agent_id": "nebula",
+      "label": "Track dispatch",
+      "seq": 3
+    },
+    {
+      "id": "voyager.slow",
+      "agent_id": "voyager",
+      "label": "Find slow briefs",
+      "seq": 1
+    },
+    {
+      "id": "voyager.logos",
+      "agent_id": "voyager",
+      "label": "Spot logo problems",
+      "seq": 2
+    },
+    {
+      "id": "voyager.advice",
+      "agent_id": "voyager",
+      "label": "Pricing advice",
+      "seq": 3
+    }
+  ],
+  "state_jobs": {
+    "new": "rosetta.read",
+    "asking": "rosetta.ask",
+    "artwork": "spectra.method",
+    "proofing": "hubble.composite",
+    "awaiting_approval": "polaris.reply",
+    "collecting": "pleiades.collect",
+    "quoting": "kepler.price",
+    "awaiting_confirmation": "kepler.summary",
+    "failed": "polaris.handoff"
+  }
+}

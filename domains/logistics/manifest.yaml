@@ -1,0 +1,13 @@
+domain:
+  id: logistics.fulfillment
+  name: ZAR Logistics Pack
+  version: 1.0.0
+  schema_version: 1.0.0
+  policy_version: 1.0.0
+  module: domains.logistics
+  lifecycle: experimental
+  requires: {zar-core: "3", contract-schema: "3", decision-runtime: "1"}
+  capabilities:
+    shipment_risk: risk-bbn
+  release_notes:
+    - Initial shipment risk capability using a small Bayesian network.

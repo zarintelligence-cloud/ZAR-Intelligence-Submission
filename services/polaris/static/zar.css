@@ -1,0 +1,43 @@
+/* ZAR Intelligence - Mission Control tokens (dark, deep-space like the orbit reference) */
+:root{--bg:#0e0f12;--bg2:#131418;--panel:#17181d;--panel2:#1d1f25;--line:#282b33;--line2:#343843;
+--text:#e9eaef;--muted:#8d919c;--dim:#5d616b;--gold:#f0c75e;--gold2:#c99a2e;--ok:#63d39a;--warn:#f2a65a;--bad:#f07178;--link:#8ab4ff;
+--mono:"JetBrains Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace;--sans:"Inter","Segoe UI",system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.45 var(--sans)}
+a{color:var(--link)}button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border-radius:8px;border:1px solid var(--line2);background:var(--panel2);padding:7px 12px}
+button:hover{border-color:#4a5060}button.primary{background:var(--gold);border-color:var(--gold);color:#1a1405;font-weight:600}
+button.primary:hover{background:#f6d57f}button.ghost{background:transparent}button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input,select,textarea{background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:8px 10px;width:100%}
+.muted{color:var(--muted)}.dim{color:var(--dim)}.mono{font-family:var(--mono);font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);font-size:12px;color:var(--muted);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;flex:none}
+.s-ok{color:var(--ok)}.s-needs_input{color:var(--warn)}.s-error{color:var(--bad)}
+pre.json{margin:0;font:12px/1.5 var(--mono);white-space:pre-wrap;word-break:break-word;color:#cfd3dc}
+pre.json .k{color:#9ecbff}pre.json .s{color:#b5e08c}pre.json .n{color:#f7c77e}pre.json .b{color:#d9a4ff}pre.json .z{color:#7d8390}
+.scroll{overflow:auto;scrollbar-width:thin;scrollbar-color:#3a3e48 transparent}
+/* chat (shared by console + embed) */
+.chat{display:flex;flex-direction:column;min-height:0;height:100%}
+.msgs{flex:1;display:flex;flex-direction:column;gap:8px;padding:12px;overflow:auto;min-height:0}
+.msg{max-width:88%;padding:9px 12px;border-radius:12px;white-space:pre-wrap;font-size:13.5px}
+.msg.assistant{background:var(--panel2);align-self:flex-start;border-top-left-radius:4px}
+.msg.customer{background:#2a2412;border:1px solid #4a3b12;align-self:flex-end;border-top-right-radius:4px}
+.dock{border-top:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.proofs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.proof{padding:4px;background:var(--bg2);border:1px solid var(--line2);border-radius:10px;text-align:left;font-size:12px}
+.proof img{width:100%;display:block;border-radius:6px;background:#eef0f5}.proof:hover{border-color:var(--gold)}
+.proof.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar>i{display:block;height:100%;background:var(--ok)}
+.sheet dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:13px}.sheet dt{color:var(--muted)}.sheet dd{margin:0}
+.sheet h4{margin:14px 0 6px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.big{font-size:28px;font-weight:700;letter-spacing:-.01em}
+.logos{display:flex;gap:6px;flex-wrap:wrap}.logos button{padding:3px;width:52px;height:52px;background:#fff}
+.logos button img{width:100%;height:100%;object-fit:contain}.logos button.sel{outline:2px solid var(--gold)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Confirmed references and share links also fit narrow widget panels. */
+.dock .chip{white-space:normal;overflow-wrap:anywhere;max-width:100%;min-width:0;border-radius:12px}
+.dock a{overflow-wrap:anywhere;max-width:100%}
+.msg{overflow-wrap:anywhere}

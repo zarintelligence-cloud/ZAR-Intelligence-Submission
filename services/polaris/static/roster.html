@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Store 6 - add yourself to the team roster</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 "Barlow","Segoe UI",system-ui,sans-serif;background:#f6f7f9;color:#2b3445}
+form{max-width:420px;margin:40px auto;background:#fff;border:1px solid #d6dbe4;border-radius:10px;padding:24px}
+h1{font:700 28px/1.1 "Barlow Condensed","Arial Narrow",sans-serif;color:#101828;margin:0 0 6px}
+label{display:block;margin-top:14px;font-weight:600}input,select{font:inherit;width:100%;padding:10px;border:1px solid #d6dbe4;border-radius:8px}
+button{margin-top:18px;width:100%;font:600 16px "Barlow",system-ui,sans-serif;padding:12px;border:0;border-radius:8px;background:#101828;color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #e9b949;outline-offset:2px}
+#msg{min-height:1.5em;margin-top:12px}
+</style></head>
+<body>
+<form id="f"><div style="font:800 13px system-ui;letter-spacing:.06em;color:#667085">STORE 6 · TEAM KIT</div><h1>Team roster</h1><p id="count">Loading...</p>
+<label for="name">Name to print</label><input id="name" maxlength="12" required autocomplete="off">
+<div id="numwrap" hidden><label for="number">Jersey number (0-99)</label><input id="number" inputmode="numeric" maxlength="2"></div>
+<label for="size">Size</label><select id="size"></select>
+<button>Add me to the roster</button><p id="msg" role="status"></p></form>
+<script>
+const tok=location.pathname.split("/").pop();
+async function load(){const r=await fetch(`/v1/roster/${tok}`);if(!r.ok){document.getElementById("count").textContent="This roster link is not valid.";return}
+ const i=await r.json();document.querySelector("button").disabled=i.closed;document.getElementById("name").maxLength=i.needs.includes("names")?12:40;document.querySelector("label[for=name]").textContent=i.needs.includes("names")?"Name to print":"Team member name";document.getElementById("count").textContent=i.closed?"This roster is closed.":`${i.submitted} of ${i.expected} players added so far.`;
+ document.getElementById("size").innerHTML=i.sizes.map(s=>`<option>${s}</option>`).join("");document.getElementById("numwrap").hidden=!i.needs.includes("numbers")}
+document.getElementById("f").onsubmit=async e=>{e.preventDefault();const body={name:document.getElementById("name").value,size:document.getElementById("size").value,number:document.getElementById("number").value};
+ const r=await fetch(`/v1/roster/${tok}/entries`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+ const out=await r.json().catch(()=>({message:"Could not save. Try again."}));document.getElementById("msg").textContent=out.message||out.detail||"";
+ if(out.accepted){e.target.reset()}load()};
+load();
+</script></body></html>

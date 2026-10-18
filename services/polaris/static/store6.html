@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Store 6 - Custom team kits for company events (demo storefront)</title>
+<style>
+:root{--ink:#101828;--amber:#f5b82e;--paper:#fafaf7;--slate:#475467;--line:#e4e7ec}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+a{color:inherit}.demo{background:#fff4d6;color:#7a5200;font-size:13px;text-align:center;padding:6px 12px}
+header{display:flex;align-items:center;gap:28px;padding:18px 5vw;border-bottom:1px solid var(--line);background:#fff}
+.logo{font:800 26px/1 "Arial Narrow","Roboto Condensed",sans-serif;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.logo i{font-style:normal;background:var(--ink);color:var(--amber);width:34px;height:34px;border-radius:8px;display:grid;place-items:center}
+nav{display:flex;gap:22px;font-size:15px;color:var(--slate)}nav a{text-decoration:none}nav a:hover{color:var(--ink)}
+header .cta{margin-left:auto}
+.btn{display:inline-block;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:12px 18px;font:600 15px inherit;cursor:pointer;text-decoration:none}
+.btn.alt{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}.btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 5vw 40px;max-width:1240px;margin:0 auto}
+.hero h1{font:800 clamp(34px,5vw,58px)/1.02 "Arial Narrow","Roboto Condensed",sans-serif;margin:0 0 16px;letter-spacing:-.01em}
+.hero p{font-size:18px;color:var(--slate);max-width:52ch;margin:0 0 24px}.hero .row{display:flex;gap:12px;flex-wrap:wrap}
+.kitwall{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.kitwall svg{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+section.products{max-width:1240px;margin:0 auto;padding:10px 5vw 40px}
+h2{font:800 30px/1.1 "Arial Narrow","Roboto Condensed",sans-serif;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.card svg{width:100%;height:auto;background:#f2f4f7;border-radius:10px}.card h3{margin:10px 0 2px;font-size:17px}
+.card .p{color:var(--slate);font-size:14px}.card .price{font-weight:700;margin-top:6px}
+.how{background:var(--ink);color:#fff;padding:44px 5vw}.how .in{max-width:1240px;margin:0 auto}
+.how ol{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;list-style:none;padding:0;margin:0;counter-reset:s}
+.how li{counter-increment:s;border-top:2px solid var(--amber);padding-top:12px;color:#d0d5dd}.how li::before{content:counter(s);display:block;font:800 28px "Arial Narrow",sans-serif;color:var(--amber)}
+.how b{color:#fff;display:block}
+footer{padding:26px 5vw;color:var(--slate);font-size:14px;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+@media(max-width:860px){.hero{grid-template-columns:1fr}.how ol{grid-template-columns:1fr 1fr}nav{display:none}}
+</style>
+</head>
+<body>
+<div class="demo">Demo storefront for the ZAR Intelligence prototype · live site: store6.co.in · <a href="/" target="_blank" rel="noopener">watch the agents in Mission Control</a></div>
+<header><div class="logo"><i>6</i>STORE 6</div>
+  <nav aria-label="Store"><a href="#products">Jerseys</a><a href="#products">Polos</a><a href="#products">Combos</a><a href="#how">Corporate orders</a></nav>
+  <button class="btn cta" onclick="ZARWidget.open()">Design your team kit</button></header>
+<main>
+<section class="hero">
+  <div><h1>Team kits for your company's big day</h1>
+    <p>Jerseys, polos, shorts and combo packs for tournaments, offsites and charity runs. Describe your team in a sentence, add your logo, and see proofs and a price in minutes.</p>
+    <div class="row"><button class="btn" onclick="ZARWidget.open()">Start with your brief</button>
+      <button class="btn alt" id="sample">Try a sample brief</button></div></div>
+  <div class="kitwall" id="wall" aria-hidden="true"></div>
+</section>
+<section class="products" id="products"><h2>Made to order</h2><div class="grid" id="grid"></div></section>
+<section class="how" id="how"><div class="in"><h2>How a custom order works</h2><ol>
+  <li><b>Tell us what you need</b>Team size, garment, colours, date and logo. We only ask what's missing.</li>
+  <li><b>Pick a proof</b>Three proofs with your real logo and a recommended print method.</li>
+  <li><b>Share the roster link</b>Every player adds their name, number and size.</li>
+  <li><b>Confirm the quote</b>Fixed price from our price list, with a delivery outlook for your date.</li></ol></div></section>
+</main>
+<footer><span>© Store 6 · OhanaAISolutions</span><span>Corporate orders · Bengaluru</span></footer>
+<script>
+const shirt = (body, trim, sleeve) => `<svg viewBox="0 0 200 190" role="img" aria-label="${body} garment"><path d="M70 20 L40 30 L10 ${sleeve ? 120 : 70} L32 ${sleeve ? 128 : 84} L45 62 L45 180 L155 180 L155 62 L168 ${sleeve ? 128 : 84} L190 ${sleeve ? 120 : 70} L160 30 L130 20 Q100 48 70 20 Z" fill="${body}" stroke="#1f2937" stroke-width="1.5"/><path d="M70 20 Q100 48 130 20" fill="none" stroke="${trim}" stroke-width="6"/><rect x="45" y="170" width="110" height="7" fill="${trim}"/></svg>`;
+const shorts = (body, trim) => `<svg viewBox="0 0 200 190" role="img" aria-label="shorts"><path d="M45 40 L155 40 L170 160 L112 160 L100 95 L88 160 L30 160 Z" fill="${body}" stroke="#1f2937" stroke-width="1.5"/><rect x="45" y="40" width="110" height="10" fill="${trim}"/></svg>`;
+const kits = [["#15233e", "#d4af37", 0], ["#b91c1c", "#ffffff", 0], ["#0f766e", "#fde047", 1], ["#f5f5f5", "#1d4ed8", 0], ["#111827", "#f97316", 1], ["#6d1a2a", "#f5f5f5", 0]];
+document.getElementById("wall").innerHTML = kits.map(k => shirt(...k)).join("");
+fetch("/v1/tenants/store6").then(r => r.json()).then(t => {
+  const art = { "cricket jersey": shirt("#15233e", "#d4af37", 0), "polo": shirt("#6d1a2a", "#f5f5f5", 0), "round neck tee": shirt("#f5f5f5", "#1d4ed8", 0),
+    "sports shorts": shorts("#111827", "#f97316"), "jersey + shorts combo": shirt("#0f766e", "#fde047", 0) };
+  document.getElementById("grid").innerHTML = t.storefront.map(p => `<div class="card">${art[p.garment] || ""}<h3>${p.name}</h3><div class="p">${p.note}</div><div class="price">from ₹${p.from_price} / piece</div>
+    <button class="btn alt" style="margin-top:10px;padding:8px 12px;font-size:14px" onclick="ZARWidget.open({brief:'${p.name} for our team of 25 - colours, date and logo attached'})">Customise</button></div>`).join("");
+});
+document.getElementById("sample").onclick = () => ZARWidget.open({ brief: "Need jerseys for our company cricket tournament on 15 Nov. Around 40 people. Navy and gold, budget roughly 25k, names on the back." });
+</script>
+<script src="/widget.js" data-tenant="store6" defer></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+workflow:
+  id: retail.custom_apparel.order
+  version: 1.1.0
+  initial: new
+  terminal: [confirmed, cancelled]
+  states: [new, asking, artwork, awaiting_approval, collecting, awaiting_confirmation, confirmed, cancelled]
+  transitions:
+    - {from: new, event: created, handler: analyse_requirements}
+    - {from: asking, event: customer_reply, handler: analyse_requirements}
+    - {from: artwork, event: continue, handler: analyse_artwork_and_proof}
+    - {from: awaiting_approval, event: proof_chosen, handler: open_roster}
+    - {from: awaiting_approval, event: change_request, handler: request_changes}
+    - {from: collecting, event: roster_entry, handler: add_roster_entry}
+    - {from: collecting, event: roster_complete, handler: quote}
+    - {from: awaiting_confirmation, event: change_request, handler: request_changes}
+    - {from: awaiting_confirmation, event: confirmed, handler: finalise}
+    - {from: confirmed, event: handoff_retry, handler: retry_handoff}
+    - {from: "*", event: cancel, handler: cancel}

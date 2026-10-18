@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZAR Intelligence - Mission Control</title>
+<link rel="stylesheet" href="/static/zar.css?v=r4-db2">
+<style>
+body{display:flex;flex-direction:column;min-height:100vh}
+header.top{display:flex;align-items:center;gap:18px;padding:10px 18px;border-bottom:1px solid var(--line);background:#101115;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.01em;font-size:16px}.brand b{color:var(--gold)}.brand span{font-weight:500;color:var(--muted);margin-left:6px}
+nav.tabs{display:flex;gap:4px}nav.tabs button{background:transparent;border-color:transparent;color:var(--muted)}
+nav.tabs button[aria-selected="true"]{color:var(--text);background:var(--panel2);border-color:var(--line2)}
+header .right{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+main{flex:1;min-height:0}.view{display:none}.view.on{display:block}
+.live.on{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:minmax(360px,56vh) minmax(300px,1fr);height:calc(100vh - 53px)}
+.stage{position:relative;border-right:1px solid var(--line);min-height:0;grid-column:1;grid-row:1}
+#orbit{position:absolute;inset:0;width:100%;height:100%;display:block}
+.overlay{position:absolute;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.status{top:12px;left:14px;color:#cfd2da}.hint{bottom:10px;left:14px;color:var(--dim)}
+.resetv{position:absolute;bottom:10px;right:12px;font-size:12px}
+.sessionbar{position:absolute;top:10px;right:12px;display:flex;gap:6px;align-items:center}
+.sessionbar select{width:auto;max-width:280px;padding:5px 8px;font-size:12.5px}.sessionbar label{display:flex;gap:5px;align-items:center;font-size:12.5px;color:var(--muted)}
+.sessionbar input[type=checkbox]{width:auto}
+.narr{position:absolute;left:50%;transform:translateX(-50%);bottom:44px;width:min(640px,92%);background:#15161bee;border:1px solid #3d3420;border-radius:12px;padding:10px 14px;box-shadow:0 10px 30px #0008}
+.narr .t{font-size:12px;color:var(--gold);font-weight:600}.narr p{margin:4px 0 8px}
+.side{display:flex;flex-direction:column;min-height:0;grid-column:2;grid-row:1}
+.subtabs{display:flex;border-bottom:1px solid var(--line)}.subtabs button{flex:1;border:0;border-radius:0;background:transparent;color:var(--muted);padding:9px}
+.subtabs button[aria-selected="true"]{color:var(--text);box-shadow:inset 0 -2px var(--gold)}
+.pane{flex:1;min-height:0;overflow:auto}.pane[hidden]{display:none}#sheet{padding:12px 14px}
+.debug{grid-column:1 / span 2;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);border-top:1px solid var(--line);min-height:0}
+.debug>div{min-height:0;display:flex;flex-direction:column}.debug>div+div{border-left:1px solid var(--line)}
+.dh{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.dh b{color:var(--text);font-size:13px}.dh .sp{margin-left:auto;display:flex;gap:6px}.dh button{padding:4px 9px;font-size:12px}
+#timeline{flex:1;overflow:auto;padding:6px 8px}
+.step{border:1px solid transparent;border-radius:9px;padding:7px 8px;margin-bottom:4px}.step:hover{background:#15161a;border-color:var(--line)}
+.step.sel{border-color:#4a4020;background:#17150f}
+.sh{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;cursor:pointer;font-size:12.5px}.sh .seq{color:var(--dim);font-family:var(--mono);font-size:11.5px;min-width:28px}
+.sh .ev{font-weight:600}.sh .tr{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.runs{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0 0 36px}
+.run{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;padding:3px 8px;border-radius:7px;border:1px solid var(--line2);background:var(--bg2)}
+.run:hover,.run.sel{border-color:var(--gold)}.run i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dec{font-size:11.5px;padding:3px 8px;border-radius:7px;border:1px dashed #6b5a2a;background:transparent;color:#e7cf8a}
+.said{margin:5px 0 0 36px;font-size:12px;color:#aeb3bf;white-space:pre-wrap;border-left:2px solid var(--line2);padding-left:8px}
+#inspector{flex:1;overflow:auto;padding:12px 14px}
+.itabs{display:flex;gap:4px;margin:10px 0}.itabs button{padding:4px 10px;font-size:12px}.itabs button[aria-selected="true"]{border-color:var(--gold);color:var(--gold)}
+.kv{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:5px 12px;font-size:12.5px}.kv dt{color:var(--muted)}.kv dd{margin:0}
+.action{background:#16150f;border:1px solid #3a3320;border-radius:10px;padding:10px 12px;margin:8px 0;font-size:13px}
+.action ol{margin:6px 0 0;padding-left:18px}.action li{margin:3px 0}
+pre.prompt{white-space:pre-wrap;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px;font:12px/1.5 var(--mono);color:#d7dae2;margin:6px 0}
+.wrap{max-width:1180px;margin:22px auto;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h3{margin:0 0 4px;font-size:16px}.card p{margin:6px 0;color:#c3c7d0;font-size:13px}
+.card .row{margin-top:10px}.agenthead{display:flex;gap:12px;align-items:center}
+.glyph{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:18px;border:1.5px solid;background:#1b1e25;flex:none}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600;font-size:12px}
+tbody tr{cursor:pointer}tbody tr:hover{background:#15161a}
+h2{font-size:18px;margin:0 0 12px}h2 small{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.stats div{background:var(--bg2);border-radius:8px;padding:6px 8px;font-size:11.5px;color:var(--muted)}.stats b{display:block;font-size:15px;color:var(--text)}
+@media (max-width:1000px){.live.on{grid-template-columns:1fr;grid-template-rows:420px auto auto;height:auto}.side{grid-column:1;grid-row:2;min-height:520px}.debug{grid-column:1;grid-row:3;grid-template-columns:1fr}.debug>div{min-height:320px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>ZAR</b> Intelligence<span>Mission Control</span></div><a href="/">Overview</a>
+  <button id="admin-login">Admin access</button>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-v="live" aria-selected="true">Live</button><button role="tab" data-v="scenarios">Demo flows</button>
+    <button role="tab" data-v="orders">Orders</button><button role="tab" data-v="agents">Agents</button><button role="tab" data-v="system">System</button>
+  </nav>
+  <div class="right"><span class="chip"><span class="dot"></span>Tenant: Store 6 · store6.co.in</span>
+    <a href="/store6" target="_blank" rel="noopener">Open Store 6 storefront</a><span class="chip mono" id="rel"></span></div>
+</header>
+<main>
+<section class="view live on" id="v-live">
+  <div class="stage">
+    <canvas id="orbit" aria-label="Agent orbit. Use arrow keys to select agents."></canvas>
+    <div class="overlay status"><span class="dot" id="sdot"></span><span id="status">Ready for a custom-order brief.</span></div>
+    <div class="sessionbar"><select id="sessionpick" aria-label="Order session"></select>
+      <label><input type="checkbox" id="follow" checked> Follow live</label><button id="replay" class="ghost" title="Replay this order's agent calls">Replay</button></div>
+    <div class="narr" id="narr" hidden></div>
+    <div class="overlay hint">Drag to orbit · Select a node to inspect</div>
+    <button class="resetv ghost" id="resetv">↗ Reset view</button>
+  </div>
+  <aside class="side">
+    <div class="subtabs" role="tablist"><button data-p="conv" aria-selected="true">Conversation</button><button data-p="sheet">Order sheet</button></div>
+    <div class="pane" id="p-conv"></div><div class="pane" id="p-sheet" hidden><div id="sheet"></div></div>
+  </aside>
+  <section class="debug">
+    <div><div class="dh"><b>Trace</b><span id="tcount"></span><span class="sp"><button id="dl">Download trace</button></span></div><div id="timeline" class="scroll"></div></div>
+    <div><div class="dh"><b>Inspector</b><span id="icrumb"></span></div><div id="inspector" class="scroll"></div></div>
+  </section>
+</section>
+<section class="view" id="v-scenarios"><div class="wrap"><h2>Demo flows <small>Scripted Store 6 orders that exercise every Phase 1 agent</small></h2>
+  <div class="row" style="margin-bottom:14px"><span class="muted">Speed</span><select id="speed" style="width:auto"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+  <div class="grid" id="scards"></div></div></section>
+<section class="view" id="v-orders"><div class="wrap"><h2>Orders <small>Sessions for tenant Store 6</small></h2><div class="card" style="padding:0;overflow:auto"><table><thead><tr><th>Order</th><th>State</th><th>Garment</th><th>Qty</th><th>Total</th><th>Updated</th></tr></thead><tbody id="otable"></tbody></table></div>
+  <h2 style="margin-top:26px">Store 6 inbox <small>Production specs received through the Store 6 connector</small></h2><div id="inbox" class="grid"></div></div></section>
+<section class="view" id="v-agents"><div class="wrap"><h2>Agents <small>Phase 1 capability providers and their live metrics</small></h2><div class="grid" id="acards"></div></div></section>
+<section class="view" id="v-system"><div class="wrap"><h2>System</h2><div class="grid" id="sys"></div>
+  <h2 style="margin-top:26px">Policy files <small>Versioned business rules - change these, not code</small></h2>
+  <div class="row" style="margin-bottom:10px"><select id="polpick" style="width:auto"></select></div><pre class="prompt" id="poltext"></pre></div></section>
+</main>
+<script src="/static/common.js?v=r4-db2"></script><script src="/static/orbit.js"></script><script src="/static/chat.js?v=r4-db2"></script><script src="/static/console.js?v=r4-db2"></script>
+</body>
+</html>

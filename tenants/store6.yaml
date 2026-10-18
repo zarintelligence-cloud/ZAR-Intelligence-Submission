@@ -1,0 +1,21 @@
+# Tenant profile: branding and channel settings for the Store 6 demo. Business rules stay in the Retail Pack.
+tenant:
+  id: store6
+  name: Store 6
+  domain: store6.co.in
+  tagline: Custom team kits for company events
+  segment: Corporate teams - jerseys, polos, shorts and combo packs
+  colours: {primary: "#101828", accent: "#f5b82e"}
+  domain_pack: retail.custom_apparel
+  widget:
+    button_text: Design your team kit
+    greeting: Tell us about your team, event date and colours, and attach your logo.
+  connector:
+    capability: order_handoff
+    mode_env: ZAR_ORDER_WEBHOOK_URL   # empty = sandbox (handoffs collection)
+  storefront:
+    - {garment: cricket jersey, name: Cricket jersey, from_price: 380, note: Sublimated polyester}
+    - {garment: polo, name: Corporate polo, from_price: 420, note: Cotton pique}
+    - {garment: round neck tee, name: Round-neck tee, from_price: 260, note: Cotton, event crews}
+    - {garment: sports shorts, name: Sports shorts, from_price: 290, note: Polyester}
+    - {garment: jersey + shorts combo, name: Jersey + shorts combo, from_price: 620, note: Full match kit}

@@ -1,0 +1,9 @@
+max_questions: 3
+ask_threshold: 0.15       # ask optional fields only if p_default_wrong x cost_if_wrong >= threshold
+fields:
+  garment_type: {essential: true, question: "Which garment would you like - cricket jersey, polo or round-neck tee?"}
+  quantity: {essential: true, question: "How many pieces do you need?"}
+  deadline: {essential: true, question: "By which date do you need them delivered?"}
+  sleeve: {essential: false, default: half, p_default_wrong: 0.4, cost_if_wrong: 0.8, question: "Half sleeve or full sleeve?"}
+  personalisation: {essential: false, default: [], p_default_wrong: 0.3, cost_if_wrong: 0.6, question: "Should we print names and/or numbers on the back?"}
+  colours: {essential: false, default: [], p_default_wrong: 0.2, cost_if_wrong: 0.5, question: "Which team colours should we use?"}

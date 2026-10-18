@@ -1,0 +1,11 @@
+# Calendar-day triangular distributions (min, mode, max). Tenant-calibrated after launch.
+production_days:
+  sublimation: [4, 6, 9]
+  screen: [5, 7, 10]
+  dtf: [3, 5, 8]
+extra_day_per_pieces: 50        # +1 production day for each 50 pieces above the first 50
+roster_wait_days: [1, 2, 5]     # applied only while the roster is still open
+approval_wait_days: [0, 1, 2]   # applied only before a proof is approved
+shipping_days: [2, 3, 6]
+simulations: 5000
+thresholds: {on_track: 0.85, at_risk: 0.6}

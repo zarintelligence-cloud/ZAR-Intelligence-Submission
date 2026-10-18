@@ -1,0 +1,16 @@
+.gcloudignore
+.git
+.gitignore
+.venv/
+.env*
+*.pem
+*.key
+*credentials*.json
+*service-account*.json
+data/
+work/
+node_modules/
+**/node_modules/
+**/__pycache__/
+.pytest_cache/
+*.zip

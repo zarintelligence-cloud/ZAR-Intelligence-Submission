@@ -1,0 +1,328 @@
+[
+ {
+  "id": "overview",
+  "name": "Overview dashboards",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "A live command centre for every storefront.",
+  "icon": "overview",
+  "plans": [
+   "basic",
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": true,
+  "customerAccess": false,
+  "order": 0
+ },
+ {
+  "id": "orders",
+  "name": "Orders",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "Search orders, read the conversation and act on them.",
+  "icon": "orders",
+  "plans": [
+   "basic",
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": true,
+  "customerAccess": false,
+  "order": 1
+ },
+ {
+  "id": "traces",
+  "name": "Agent traces",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "Step-by-step timing and model use for every agent run.",
+  "icon": "traces",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 1999,
+   "USD": 25,
+   "EUR": 23
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 2
+ },
+ {
+  "id": "audit",
+  "name": "Decision audit",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "Every agent decision with its rule and a record hash.",
+  "icon": "audit",
+  "plans": [
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 4999,
+   "USD": 59,
+   "EUR": 55
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 3
+ },
+ {
+  "id": "insights",
+  "name": "Insights",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "Garment, channel, language and budget mix for analysts.",
+  "icon": "insights",
+  "plans": [
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 3999,
+   "USD": 49,
+   "EUR": 45
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 4
+ },
+ {
+  "id": "brain",
+  "name": "Second brain",
+  "group": "views",
+  "groupLabel": "Workspace views",
+  "description": "Ask questions of your price table, policies and past orders.",
+  "icon": "brain",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 2999,
+   "USD": 35,
+   "EUR": 33
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 5
+ },
+ {
+  "id": "webchat",
+  "name": "Web chat",
+  "group": "channels",
+  "groupLabel": "Customer channels",
+  "description": "Polaris answers on your storefront's chat widget.",
+  "icon": "chat",
+  "plans": [
+   "basic",
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": false,
+  "customerAccess": true,
+  "order": 6
+ },
+ {
+  "id": "email",
+  "name": "Email",
+  "group": "channels",
+  "groupLabel": "Customer channels",
+  "description": "Orders sent to your orders inbox are read and answered.",
+  "icon": "mail",
+  "plans": [
+   "basic",
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": false,
+  "customerAccess": true,
+  "order": 7
+ },
+ {
+  "id": "whatsapp",
+  "name": "WhatsApp Business",
+  "group": "channels",
+  "groupLabel": "Customer channels",
+  "description": "Customers order on WhatsApp, in their own language mix.",
+  "icon": "phone",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 2499,
+   "USD": 29,
+   "EUR": 27
+  },
+  "core": false,
+  "customerAccess": true,
+  "order": 8
+ },
+ {
+  "id": "instagram",
+  "name": "Instagram messages",
+  "group": "channels",
+  "groupLabel": "Customer channels",
+  "description": "Polaris replies to custom-order DMs on Instagram.",
+  "icon": "camera",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 1499,
+   "USD": 18,
+   "EUR": 17
+  },
+  "core": false,
+  "customerAccess": true,
+  "order": 9
+ },
+ {
+  "id": "proofs",
+  "name": "Logo proofs",
+  "group": "agents",
+  "groupLabel": "Agents and automation",
+  "description": "Hubble places the real logo on garments in three colourways.",
+  "icon": "proof",
+  "plans": [
+   "basic",
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": false,
+  "customerAccess": true,
+  "order": 10
+ },
+ {
+  "id": "roster",
+  "name": "Team roster collection",
+  "group": "agents",
+  "groupLabel": "Agents and automation",
+  "description": "Pleiades collects every member's size, name and number.",
+  "icon": "roster",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 1999,
+   "USD": 25,
+   "EUR": 23
+  },
+  "core": false,
+  "customerAccess": true,
+  "order": 11
+ },
+ {
+  "id": "multistore",
+  "name": "Multiple storefronts",
+  "group": "agents",
+  "groupLabel": "Agents and automation",
+  "description": "Run several sites from one workspace and one second brain.",
+  "icon": "store",
+  "plans": [
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 2499,
+   "USD": 29,
+   "EUR": 27
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 12
+ },
+ {
+  "id": "zuzu",
+  "name": "ZuZu assistant",
+  "group": "assist",
+  "groupLabel": "Assistant",
+  "description": "A guide in the console that shows people where things are and how to finish a task.",
+  "icon": "zuzu",
+  "plans": [
+   "plus",
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 999,
+   "USD": 12,
+   "EUR": 11
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 13
+ },
+ {
+  "id": "export",
+  "name": "Data export and API",
+  "group": "platform",
+  "groupLabel": "Security and data",
+  "description": "Export orders and decisions, or read them through the API.",
+  "icon": "export",
+  "plans": [
+   "pro",
+   "enterprise"
+  ],
+  "addonMonthly": {
+   "INR": 2999,
+   "USD": 35,
+   "EUR": 33
+  },
+  "core": false,
+  "customerAccess": false,
+  "order": 14
+ },
+ {
+  "id": "sso",
+  "name": "Single sign-on",
+  "group": "platform",
+  "groupLabel": "Security and data",
+  "description": "Sign in with Google Workspace or Microsoft Entra ID.",
+  "icon": "lock",
+  "plans": [
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": false,
+  "customerAccess": false,
+  "order": 15
+ },
+ {
+  "id": "residency",
+  "name": "Data residency",
+  "group": "platform",
+  "groupLabel": "Security and data",
+  "description": "Keep data in the cloud region you choose.",
+  "icon": "globe",
+  "plans": [
+   "enterprise"
+  ],
+  "addonMonthly": null,
+  "core": false,
+  "customerAccess": false,
+  "order": 16
+ }
+]

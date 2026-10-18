@@ -1,0 +1,45 @@
+/* The user's first screenshot: broad canvas, side labels and orbiting lights. */
+.app-shell:has(.overview-page){max-width:none}
+main.overview-page{max-width:none;padding:32px clamp(18px,1.45vw,36px) 28px}
+.overview-page .overview-heading{min-height:140px;margin-bottom:32px}
+.overview-page .overview-heading h1{font-size:clamp(36px,2.8vw,62px);line-height:1.2;margin-top:22px;letter-spacing:-1.3px}
+.overview-page .overview-heading .eyebrow{font-size:clamp(11px,.95vw,20px);letter-spacing:2.4px}
+.overview-page .workspace-state{font-size:clamp(13px,1.08vw,23px);gap:18px;padding-right:18px}
+.overview-page .workspace-state div span{font-size:clamp(12px,.98vw,21px);margin-top:12px}
+.overview-page .small-orbit{width:clamp(28px,2.35vw,50px);height:clamp(28px,2.35vw,50px)}
+.overview-page .small-orbit:after{inset:9px}
+.reference-constellation{position:relative;isolation:isolate;width:100%;aspect-ratio:2.98;min-height:390px;background:radial-gradient(ellipse at 50% 47%,#17233855,transparent 65%),#0b121c;border:1px solid #778ba018;border-radius:18px;overflow:hidden}
+.reference-constellation canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.constellation-heading{position:absolute;top:6%;left:2.2%;right:2.2%;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.constellation-heading .eyebrow{font-size:clamp(11px,.88vw,19px);letter-spacing:2.5px;color:#94a3b9}
+.constellation-heading .micro{font-size:clamp(10px,.95vw,20px)}
+.constellation-labels{position:absolute;inset:0;pointer-events:none}
+.constellation-label{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 12px;border:0;border-radius:8px;background:transparent;pointer-events:auto;cursor:pointer;white-space:nowrap}
+.constellation-name{color:var(--agent-color);font-size:clamp(15px,1.16vw,25px);line-height:1.2}
+.constellation-role{color:#8595ad;font-size:clamp(10px,.87vw,19px);line-height:1.3;text-transform:uppercase;font-weight:400;white-space:nowrap}
+.constellation-label:hover,.constellation-label:focus-visible{background:#18233880;outline:1px solid #8195b34a}
+.constellation-core{position:absolute;left:50%;top:47%;width:clamp(84px,7vw,150px);height:clamp(84px,7vw,150px);transform:translate(-50%,-50%);border:0;background:transparent;padding:0;cursor:pointer;color:#eff3ff}
+.constellation-sphere{position:absolute;inset:0;display:grid;place-items:center;border-radius:50%;border:2px solid #7189d266;background:radial-gradient(circle at 34% 30%,#adbcfc,#687fd1 14%,#344572 42%,#142039 76%);box-shadow:0 0 0 5px #8399e41a,0 0 0 12px #8399e408,0 0 30px #819ef326,inset -5px -8px 15px #06102499;font-weight:600;font-size:clamp(17px,1.15vw,26px)}
+.constellation-sphere:before,.constellation-sphere:after{content:'';position:absolute;border:1px solid #7292e236;border-radius:50%;inset:-14px}
+.constellation-sphere:after{inset:-22px;border-color:#7292e224}
+.constellation-core-name{position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);font-size:clamp(13px,1.05vw,23px);line-height:1.2;color:#b0bcec}
+.constellation-core>.constellation-role{position:absolute;top:calc(100% + 42px);left:50%;transform:translateX(-50%)}
+.constellation-core:focus-visible{outline:2px solid #a8bff3;outline-offset:27px;border-radius:50%}
+.constellation-footer{position:absolute;bottom:4%;left:2.2%;right:2.2%;display:flex;align-items:center;justify-content:space-between;color:#72839b;font-size:clamp(12px,.98vw,21px)}
+.constellation-footer .icon-button{width:clamp(34px,2.5vw,52px);height:clamp(34px,2.5vw,52px)}
+@media(max-width:650px){
+  main.overview-page{padding:26px 14px}
+  .overview-page .overview-heading{min-height:0;margin-bottom:26px}
+  .overview-page .overview-heading h1{font-size:30px}
+  .reference-constellation{min-height:370px}
+  .constellation-heading{left:14px;right:14px;top:20px}
+  .constellation-heading .eyebrow{font-size:9px;letter-spacing:1.5px}
+  .constellation-heading .micro{font-size:8px;letter-spacing:0}
+  .constellation-label{padding:7px 2px;max-width:29%;white-space:normal}
+  .constellation-name{font-size:13px}
+  .constellation-role{font-size:8px;white-space:normal}
+  .constellation-core{width:66px;height:66px}
+  .constellation-core>.constellation-role{width:120px;top:calc(100% + 38px)}
+  .constellation-core-name{font-size:12px}
+  .constellation-footer{left:14px;right:14px;font-size:10px}
+}
