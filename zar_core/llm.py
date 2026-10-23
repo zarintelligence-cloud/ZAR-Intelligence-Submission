@@ -25,8 +25,12 @@ class GeminiClient(LLMClient):
         from google import genai
         from google.genai import types
         self.types = types
-        options = types.HttpOptions(api_version="v1", timeout=45000,
-                                    retry_options=types.HttpRetryOptions(attempts=1))
+        # Retry only temporary provider failures, inside the model call. Never
+        # replay a workflow event, database write, approval, or order handoff.
+        options = types.HttpOptions(api_version="v1", timeout=30000,
+            retry_options=types.HttpRetryOptions(
+                attempts=2, initial_delay=1, max_delay=1, exp_base=1, jitter=0,
+                http_status_codes=[429, 500, 502, 503, 504]))
         api_key = os.getenv('GEMINI_API_KEY')
         if api_key:
             self.client = genai.Client(vertexai=False, api_key=api_key, http_options=options)
