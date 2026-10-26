@@ -120,6 +120,12 @@ def public(s: dict[str, Any]) -> dict[str, Any]:
             "roster_status", "fulfillment", "quote", "production_spec", "handoff", "decisions", "release", "rev",
             "scenario", "title", "created_at", "updated_at", "dropped_fields", "last_error", "roster_submission", "source_archive", "synthetic")
     out = {k: s.get(k) for k in keep}
+    # Customer-safe execution summary; never expose prompts, provider errors or debug data.
+    runs = APP.runtime.store.list("agent_runs", "session_id", s["session_id"])
+    out["agent_progress"] = [
+        {k: run.get(k) for k in ("capability", "status", "model_used", "latency_ms")}
+        for run in sorted(runs, key=lambda run: run.get("at", ""))
+    ]
     out["proofs"] = proofs
     out["artwork"] = {k: s["artwork"][k] for k in ("print_method", "reasons", "file_problems", "measured",
                                                    "allowed_methods", "rule_id")} if s.get("artwork") else None

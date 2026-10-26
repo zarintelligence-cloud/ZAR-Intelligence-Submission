@@ -1,0 +1,34 @@
+const {JSDOM}=require('jsdom');
+const fs=require('node:fs');
+const assert=require('node:assert/strict');
+const source=fs.readFileSync(process.argv[2],'utf8');
+const code=source.slice(source.indexOf('/* V12 presentation backed'),source.indexOf('const oldAppAdmin='));
+async function check(){
+ const dom=new JSDOM('<button id="to-go">Send</button><div id="to-out"></div><span id="to-mode"></span><textarea id="to-msg"></textarea><input id="to-name"><select id="to-ch"></select><input id="to-logo" type="file"><span id="to-logo-l"></span><div id="to-logo-p"></div>',{url:'https://example.test',runScripts:'outside-only'});
+ const w=dom.window;let calls=[],response={},toast='',state='asking';
+ Object.assign(w,{$:s=>w.document.querySelector(s),$$:s=>[...w.document.querySelectorAll(s)],onLeave:()=>{},ZAR_CONFIG:{tenant:{id:'store6'}},TRY_SAMPLES:[],toast:s=>toast=s,esc:s=>String(s??'').replaceAll('<','&lt;'),inr:n=>'INR '+n,render:()=>{},referenceTryOrderHTML:()=>''});
+ w.fetch=async(path,opt)=>{calls.push({path,opt});return{ok:true,json:async()=>response};};
+ w.eval(code);w.mountTryOrder(false);
+ const tick=()=>new Promise(r=>setTimeout(r,10));
+ w.$('#to-msg').value='I want 10 t shirts under 5k budget.';
+ w.$('#to-go').click();assert.match(toast,/Attach your logo/);assert.equal(calls.length,0);
+ const file=new w.File(['test'],'test.png',{type:'image/png'});
+ await w.$('#to-logo').onchange({target:{files:[file]}});
+ const sid='a'.repeat(32);
+ const base={session_id:sid,state,spec:{quantity:10,budget:5000},messages:[{role:'customer',text:'<script>bad</script>'}],allowed_events:['customer_reply','cancel'],agent_progress:[{capability:'requirements_analysis',status:'needs_input',model_used:'Gemini',latency_ms:12}]};
+ response={...base,customer_token:'private-test-token'};w.$('#to-go').click();await tick();
+ assert.equal(calls[0].path,'/v1/sessions');assert.equal(JSON.parse(calls[0].opt.body).message,'I want 10 t shirts under 5k budget.');
+ assert.equal(w.$('#to-out script'),null);assert.match(w.$('#to-out').textContent,/Rosetta/);
+ w.$('#to-answer').value='Next month, half sleeves';response={...base,state:'awaiting_approval',allowed_events:['proof_chosen','cancel'],proofs:[{proof_id:'p1',body:'navy',trim:'gold',url:'/v1/sessions/'+sid+'/proofs/p1',warnings:[]}]};
+ w.$('#to-answer-form').dispatchEvent(new w.Event('submit',{cancelable:true}));await tick();
+ assert.equal(calls[1].opt.headers['X-ZAR-Customer'],'private-test-token');assert.equal(JSON.parse(calls[1].opt.body).event,'customer_reply');
+ response={...base,state:'collecting',allowed_events:['roster_complete','cancel'],roster_path:'/roster/token',roster_status:{submitted:10,expected:10}};
+ w.$('[data-proof]').click();await tick();assert.equal(JSON.parse(calls[2].opt.body).data.proof_id,'p1');assert.ok(w.$('a[href="/roster/token"]'));
+ response={...base,state:'awaiting_confirmation',allowed_events:['confirmed','change_request','cancel'],quote:{quote:{unit_price:400,total:4000}}};
+ w.$('[data-event="roster_complete"]').click();await tick();assert.equal(JSON.parse(calls[3].opt.body).event,'roster_complete');assert.match(w.$('#to-out').textContent,/4000/);
+ w.$('#to-confirm').click();await tick();assert.equal(calls.length,4);assert.match(toast,/Approve/);
+ w.$('#to-approve').checked=true;response={...base,state:'confirmed',allowed_events:[],handoff:{delivered:true}};w.$('#to-confirm').click();await tick();assert.equal(JSON.parse(calls[4].opt.body).event,'confirmed');assert.ok(w.$('#to-new'));
+ assert.equal(new Set(calls.slice(1).map(c=>JSON.parse(c.opt.body).idempotency_key)).size,4);
+ dom.window.close();console.log('PASS: intake, artwork requirement, token access, escaping, customer answers, proof approval, roster, quote, explicit confirmation and unique action keys');
+}
+check().catch(e=>{console.error(e);process.exit(1)});
