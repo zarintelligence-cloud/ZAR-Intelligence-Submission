@@ -1937,7 +1937,7 @@ function renderApp(path) {
   $("#chrome-top").innerHTML = ""; $("#chrome-bottom").innerHTML = "";
   $("#main").innerHTML = appShell(ctx, view.html);
   document.title = `${title} | ZAR Retail`;
-  $("#signout").addEventListener("click", () => { Auth.out(); go("/"); toast("Signed out. You're back on the ZAR website."); });
+  $("#signout").addEventListener("click", () => signOutWithProgress("Signed out. You're back on the ZAR website."));
   $("#drawer-x").addEventListener("click", closeDrawer); $("#drawer-bg").addEventListener("click", closeDrawer);
   if (view.mount) view.mount();
   if(s.role.act && pack==='retail' && ['overview','orders'].includes(ctx.section) && !ctx.sub){const b=document.createElement('button');b.className='btn btn-brass';b.textContent='Start order';b.onclick=newOrderForm;document.querySelector('.page-title')?.appendChild(b);}
@@ -2326,7 +2326,7 @@ function renderHQ(path) {
   $("#chrome-top").innerHTML = ""; $("#chrome-bottom").innerHTML = "";
   $("#main").innerHTML = hqShell(s, view, v.html);
   document.title = `${title} | ZAR HQ`;
-  $("#signout").addEventListener("click", () => { Auth.out(); go("/"); toast("Signed out."); });
+  $("#signout").addEventListener("click", () => signOutWithProgress("Signed out."));
   $("#drawer-x").addEventListener("click", closeHQDrawer); $("#drawer-bg").addEventListener("click", closeHQDrawer);
   if (v.mount) v.mount();
 }
@@ -3459,7 +3459,48 @@ const Feed={connect(){Engine.start();},subscribe(fn){return Engine.on(fn);}};
 function updateConnection(){const el=$('#live-pill');if(el)el.innerHTML=`<i></i><span>${Live.online?'Saved data':'Connection lost'}</span>`;let b=$('#runtime-banner');if(!b){b=document.createElement('div');b.id='runtime-banner';b.className='runtime-banner';document.body.prepend(b);}b.textContent=`${Live.config.llm==='gemini'?'Gemini enabled':'Demo reasoning'} · ${Live.config.store||'Database unavailable'} · ${Live.user?(Live.online?'Updated every 10 seconds':'Reconnecting — displayed records may be stale'):'Sign in for live orders'}${Engine.truncated?' · Limited record window':''}`;}
 async function bootLive(){try{Live.config=await api('/config');ZAR_CONFIG.models=Live.config.models;try{Live.user=await api('/me');await Engine.refresh();}catch(e){if(e.status!==401)toast(e.message);}}catch(e){toast('Unable to reach the backend. Please reload.');}Feed.connect();render();updateConnection();}
 
-function viewSignin(q){return{title:'Sign in | ZAR Intelligence',html:`<section class="page-head night"><div class="wrap"><p class="s-label">Merchant workspace</p><h1>Your intelligence, together.</h1><p>Sign in with your assigned workspace account.</p></div></section><section class="section"><div class="wrap" style="max-width:600px"><div class="form-card">${Auth.get()?'<p>You are signed in.</p><a class="btn btn-brass" href="#/app/retail">Open workspace</a>':`<form id="secure-login"><div class="field"><label for="u">Email</label><input class="input" id="u" type="email" autocomplete="username" required></div><div class="field"><label for="p">Password</label><input class="input" id="p" type="password" autocomplete="current-password" required></div><p id="login-error" role="alert"></p><button class="btn btn-brass" ${Live.config.auth?'':'disabled'}>Sign in</button></form>${!Live.config.auth?'<p class="notice">Workspace sign-in is not configured yet. Contact your administrator.</p>':''}${Live.config.local?'<hr><p>Local development only. Opens the saved local workspace.</p><div class="field"><label for="local-token">Local admin token (if configured)</label><input class="input" id="local-token" type="password" autocomplete="off"></div><button id="local-login" class="btn btn-quiet" type="button">Open local workspace</button>':''}`}</div></div></section>`,mount(){const f=$('#secure-login');if(f)f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('button');b.disabled=true;try{await Auth.in($('#u').value,$('#p').value);go('/app/retail');}catch(err){$('#login-error').textContent=err.message;}finally{b.disabled=false;}};const b=$('#local-login');if(b)b.onclick=async()=>{b.disabled=true;try{await api('/local-login',{token:$('#local-token').value});Live.user=await api('/me');await Engine.refresh();go('/app/retail');}catch(e){toast(e.message);}finally{b.disabled=false;}};}};}
+// Authentication progress stays outside route content until navigation completes.
+const AuthProgress = {
+  active: false,
+  start(message) {
+    if (this.active) return false;
+    this.active = true;
+    this.previousFocus = document.activeElement;
+    const el = document.createElement('div');
+    el.id = 'auth-progress';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('tabindex', '-1');
+    el.style.cssText = 'position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:rgba(5,18,20,.88);color:#eee9d5';
+    el.innerHTML = `<style>@keyframes zar-auth-spin{to{transform:rotate(360deg)}}.zar-auth-spinner{width:36px;height:36px;border:3px solid #29474b;border-top-color:#c7a455;border-radius:50%;animation:zar-auth-spin .8s linear infinite;margin:0 auto 20px}@media(prefers-reduced-motion:reduce){.zar-auth-spinner{animation:none}}</style><div style="text-align:center;padding:32px"><div class="zar-auth-spinner" aria-hidden="true"></div><strong style="font:600 22px system-ui"></strong></div>`;
+    el.querySelector('strong').textContent = message;
+    document.body.appendChild(el);
+    el.focus();
+    return true;
+  },
+  async navigate(path) {
+    await new Promise((resolve, reject) => {
+      const ready = () => requestAnimationFrame(() => requestAnimationFrame(resolve));
+      const changed = location.hash !== '#' + path;
+      if (changed) window.addEventListener('hashchange', ready, {once:true});
+      try { go(path); if (!changed) ready(); }
+      catch (error) { window.removeEventListener('hashchange', ready); reject(error); }
+    });
+  },
+  end() {
+    document.getElementById('auth-progress')?.remove();
+    this.active = false;
+    if (this.previousFocus?.isConnected) this.previousFocus.focus();
+    this.previousFocus = null;
+  }
+};
+async function signOutWithProgress(message) {
+  if (!AuthProgress.start('Signing out…')) return;
+  try { await Auth.out(); await AuthProgress.navigate('/'); toast(message); }
+  catch (error) { toast(error.message); }
+  finally { AuthProgress.end(); }
+}
+function viewSignin(q){return{title:'Sign in | ZAR Intelligence',html:`<section class="page-head night"><div class="wrap"><p class="s-label">Merchant workspace</p><h1>Your intelligence, together.</h1><p>Sign in with your assigned workspace account.</p></div></section><section class="section"><div class="wrap" style="max-width:600px"><div class="form-card">${Auth.get()?'<p>You are signed in.</p><a class="btn btn-brass" href="#/app/retail">Open workspace</a>':`<form id="secure-login"><div class="field"><label for="u">Email</label><input class="input" id="u" type="email" autocomplete="username" required></div><div class="field"><label for="p">Password</label><input class="input" id="p" type="password" autocomplete="current-password" required></div><p id="login-error" role="alert"></p><button class="btn btn-brass" ${Live.config.auth?'':'disabled'}>Sign in</button></form>${!Live.config.auth?'<p class="notice">Workspace sign-in is not configured yet. Contact your administrator.</p>':''}${Live.config.local?'<hr><p>Local development only. Opens the saved local workspace.</p><div class="field"><label for="local-token">Local admin token (if configured)</label><input class="input" id="local-token" type="password" autocomplete="off"></div><button id="local-login" class="btn btn-quiet" type="button">Open local workspace</button>':''}`}</div></div></section>`,mount(){const f=$('#secure-login');if(f)f.onsubmit=async e=>{e.preventDefault();if(!AuthProgress.start('Signing in…'))return;const b=f.querySelector('button');b.disabled=true;b.textContent='Signing in…';try{await Auth.in($('#u').value,$('#p').value);await AuthProgress.navigate('/app/retail');}catch(err){$('#login-error').textContent=err.message;}finally{b.disabled=false;b.textContent='Sign in';AuthProgress.end();}};const b=$('#local-login');if(b)b.onclick=async()=>{b.disabled=true;try{await api('/local-login',{token:$('#local-token').value});Live.user=await api('/me');await Engine.refresh();go('/app/retail');}catch(e){toast(e.message);}finally{b.disabled=false;}};}};}
 
 function newOrderForm(){openDrawer('Start a real order',`<form id="new-order"><div class="field"><label for="new-store">Storefront</label><select class="input" id="new-store">${STORES().map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('')}</select></div><div class="field"><label for="new-title">Order name</label><input class="input" id="new-title" maxlength="80" required></div><div class="field"><label for="new-brief">Customer brief</label><textarea class="textarea" id="new-brief" minlength="3" maxlength="4000" placeholder="Quantity, garment, colours, deadline, budget and personalisation" required></textarea></div><div class="field"><label for="new-logo">Customer logo (PNG, JPEG or WebP, up to 5 MB)</label><input class="input" id="new-logo" type="file" accept="image/png,image/jpeg,image/webp" required></div><label><input id="new-synthetic" type="checkbox"> This is a synthetic test order</label><p id="new-error" role="alert"></p><button class="btn btn-brass">Create order</button></form>`);$('#new-order').onsubmit=async e=>{e.preventDefault();const btn=e.target.querySelector('button');btn.disabled=true;try{const file=$('#new-logo').files[0];if(!file||file.size>5*1024*1024)throw Error('Choose a logo up to 5 MB');const logo_b64=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.onerror=no;r.readAsDataURL(file);});const d=await api('/orders',{tenant_id:$('#new-store').value,title:$('#new-title').value,message:$('#new-brief').value,logo_b64,logo_mime:file.type,synthetic:$('#new-synthetic').checked});await Engine.refresh();closeDrawer();go('/app/retail/orders/'+d.id);}catch(err){$('#new-error').textContent=err.message;}finally{btn.disabled=false;}};}
 async function orderAction(o,event,data={}){const result=await api('/orders/'+o.id+'/actions',{event,data,rev:o.rev,key:crypto.randomUUID()});await Engine.refresh();render();toast(result.message||'Saved');}
